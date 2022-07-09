@@ -1,44 +1,53 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
+import IEntity from "../../model/IEntity";
 
 export interface IApi<T> {
-    getAll(url: string): Promise<T[]>,
-    get(url: string): Promise<T>,
-    add(url: string, data: T): Promise<T>,
-    update(url: string, data: T): Promise<T>,
-    delete(url: string): Promise<T>
+    getAll(): Promise<T[]>,
+    get(id: number): Promise<T>,
+    add(data: T): Promise<T>,
+    update(data: T): Promise<T>,
+    delete(id: number): Promise<T>
 }
 
-export class Api<T> implements IApi<T> {
-    getAll(url: string): Promise<T[]> {
-        return axios.get<T[]>(url)
+export class Api<T extends IEntity> implements IApi<T> {
+    private _url: string;
+
+    constructor(url: string) {
+        this._url = url;
+    }
+
+    getAll(): Promise<T[]> {
+        return axios.get<T[]>(this._url)
             .then((response: AxiosResponse<T[]>) => {
                 return response.data;
             });
     }
-    get(url: string): Promise<T> {
-        return axios.get<T>(url)
-            .then((response: AxiosResponse<T>) => {
-                return response.data;
-            });
-    }
-    add(url: string, data: T): Promise<T> {
-        return axios.post<T>(url, data)
-            .then((response: AxiosResponse<T>) => {
-                return response.data;
-            });
-    }
-    update(url: string, data: T): Promise<T> {
-        return axios.put<T>(url, data)
+
+    get(id: number): Promise<T> {
+        return axios.get<T>(this._url + '/' + id)
             .then((response: AxiosResponse<T>) => {
                 return response.data;
             });
     }
 
-    delete(url: string): Promise<T> {
-        return axios.delete<T>(url)
+    add<T>(data: T): Promise<T> {
+        return axios.post<T>(this._url, data)
             .then((response: AxiosResponse<T>) => {
-                console.log(response);
+                return response.data;
+            });
+    }
+
+    update(data: T): Promise<T> {
+        return axios.put<T>(this._url + '/' + data.id, data)
+            .then((response: AxiosResponse<T>) => {
+                return response.data;
+            });
+    }
+
+    delete(id: number): Promise<T> {
+        return axios.delete<T>(this._url + '/' + id)
+            .then((response: AxiosResponse<T>) => {
                 return response.data;
             });
     }

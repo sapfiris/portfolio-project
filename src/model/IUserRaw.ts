@@ -1,4 +1,6 @@
-export interface IUserRaw {
+import IEntity from "./IEntity";
+
+export interface IUserRaw extends IEntity {
     id?: number,
     name: string,
     username: string,

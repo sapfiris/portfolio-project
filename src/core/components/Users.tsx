@@ -1,12 +1,9 @@
 import useData from "./hooks/useData";
-import {IUserRaw} from "../../model/IUserRaw";
 import {IUser} from "../../model/IUser";
-import {UsersServiceCreator} from "../../services/UsersServiceCreator";
-
-const serviceCreator = new UsersServiceCreator();
+import { UserService } from "../../services/UserService";
 
 const Users = () => {
-    const data = useData<IUserRaw, IUser>(serviceCreator);
+    const data = useData<IUser>((new UserService()).getAll);
 
     return (
         <div>

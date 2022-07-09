@@ -1,12 +1,9 @@
 import useData from "./hooks/useData";
-import {IPostRaw} from "../../model/IPostRaw";
 import {IPost} from "../../model/IPost";
-import { PostsServiceCreator } from "../../services/PostsServiceCreator";
-
-const serviceCreator = new PostsServiceCreator();
+import {PostService} from "../../services/PostService";
 
 const Posts = () => {
-    const data = useData<IPostRaw, IPost>(serviceCreator);
+    const data = useData<IPost>(() => (new PostService()).getAll());
 
     return (
         <div>

@@ -4,10 +4,8 @@ import { UserTransformer } from './transformers/UserTransformer';
 import constants from './constants';
 import { Service } from "./Service";
 
-const url = constants.USERS_URL;
-
-export class UsersService extends Service<IUserRaw, IUser> {
+export class UserService extends Service<IUserRaw, IUser> {
     constructor() {
-        super(url, new UserTransformer());
+        super(constants.USERS_URL, new UserTransformer());
     }
 }
