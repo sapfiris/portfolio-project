@@ -3,7 +3,7 @@ import {IUser} from "../../model/IUser";
 import { UserService } from "../../services/UserService";
 
 const Users = () => {
-    const data = useData<IUser>((new UserService()).getAll);
+    const data = useData<IUser>(() => UserService.getInstance().getAll());
 
     return (
         <div>

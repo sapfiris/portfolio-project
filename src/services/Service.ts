@@ -1,5 +1,4 @@
 import {Api, IApi} from "./api/Api";
-import IEntity from "../model/IEntity";
 import {ITransformer} from "./transformers/ITransformer";
 
 export interface IService<T> {
@@ -10,7 +9,7 @@ export interface IService<T> {
     delete(id: number): Promise<T>
 }
 
-export class Service<T1 extends IEntity, T2 extends IEntity> implements IService<T2> {
+export class Service<T1, T2> implements IService<T2> {
     private _api: IApi<T1>;
     private _transformer: ITransformer<T1, T2>;
 

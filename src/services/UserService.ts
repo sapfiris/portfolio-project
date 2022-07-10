@@ -5,7 +5,17 @@ import constants from './constants';
 import { Service } from "./Service";
 
 export class UserService extends Service<IUserRaw, IUser> {
-    constructor() {
+    private static instance: UserService;
+
+    private constructor() {
         super(constants.USERS_URL, new UserTransformer());
+    }
+
+    static getInstance() {
+        if(!UserService.instance) {
+            UserService.instance = new UserService();
+        }
+
+        return UserService.instance;
     }
 }

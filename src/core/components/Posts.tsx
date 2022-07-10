@@ -3,7 +3,7 @@ import {IPost} from "../../model/IPost";
 import {PostService} from "../../services/PostService";
 
 const Posts = () => {
-    const data = useData<IPost>(() => (new PostService()).getAll());
+    const data = useData<IPost>(() => PostService.getInstance().getAll());
 
     return (
         <div>

@@ -5,7 +5,17 @@ import constants from "./constants";
 import {PostTransformer} from "./transformers/PostTransformer";
 
 export class PostService extends Service<IPostRaw, IPost> {
-    constructor() {
+    private static instance: PostService;
+
+    private constructor() {
         super(constants.POSTS_URL, new PostTransformer());
+    }
+
+    static getInstance() {
+        if(!PostService.instance) {
+            PostService.instance = new PostService();
+        }
+
+        return PostService.instance;
     }
 }
